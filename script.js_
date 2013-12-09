@@ -1,3 +1,6 @@
+
+int fontsize = 24;
+
 var sword=false;
 var gold = 10;
 var bread = 2;
@@ -17,7 +20,8 @@ var legSpeed=[];
 var legsmoving=[];
 var legsmovingspeed=[];
 var enhp=[];
-for(var i=0;i<10;i++){
+
+for(var i=0;i<5;i++){
     enX[i]=-i;
     wait[i]=false;
     legsmoving[i]=false;
@@ -28,6 +32,8 @@ for(var i=0;i<10;i++){
     legsmovingspeed[i]=random(3,5);
     enhp[i]=100;
 }
+
+
 var playerX=200;
 var pswordRotate=20;
 var protateSpeed=0;
@@ -37,18 +43,8 @@ var plegSpeed=0;
 var plegsmoving=false;
 var pwait=false;
 var townsa="No other towns unlocked";
-frameRate(30);
-
-
-void setup() {
-		    size(568, 380);
-		 //    background(#F0F0E0);
-		 //   stroke(0);
-		    fill(0);
-		    textFont(createFont("Arial",fontsize));
-	 //	    redraw();
-		   
-      };
+//frameRate(30);
+var hp=100;
 
 
 void keyReleased(){
@@ -63,44 +59,23 @@ void keyReleased(){
 
 
 
-var hp=100;
+		void setup() {
+		    size(568, 380);
+		 //    background(#F0F0E0);
+		 //   stroke(0);
+		    fill(0);
+		    textFont(createFont("Arial",fontsize));
+	//	    redraw();
+		   
+      }
 
 var myfont=createFont("serif",17);
 
-void drawButton (button_text, x, y, length) {
-    textFont(myfont,17);
-    over_button = false;
-    var outline = color;
-    var r = 232;
-    var g=193;
-    var b=102;
-    var greyVB = 220;
-    noStroke();
-    if (mouseX >= x && mouseX <= x + length && mouseY >= y && mouseY <= y + button_height) {
-        over_button = true;
-        if (mousePressed) {
-                x -=2;
-                y += 2;
-        }
-    }
-    fill(r, g, b);
-    rect(x, y, length, button_height, 2);
-    textAlign(CENTER,CENTER);
-    fill (0, 0, 0);
-    textSize(17);
-    text (button_text, x + length/2, y + button_height/2.2);
-    textAlign(LEFT, 0);
-};
-
-void mouseReleased(){
-    pressed=true;
-};
 
 
+void draw () {
 
-//////////////////////////////////////////////////////////////////////////////////////
-void draw() {
-    noStroke();
+ noStroke();
     textFont(myfont,17);
     if(area==="town"){
         background(0, 196, 255);
@@ -158,16 +133,22 @@ void draw() {
             area="towns";
         }
     }
+
+/////////////////////////////////////////////////////////////////////////////////////
     if(area==="battle"){
         stroke(0, 0, 0);
         drawBattle();
         if(enhp[4]<10){
             drawButton("Back",150,50,100);
             if(over_button&&pressed){
-                area="town";townsa="Ne"+"w Town";
+                area="town";
+		townsa="Ne"+"w Town";
             }
         }
     }
+ ///////////////////////////////////////////////////////////////////////////////////////   
+    
+    
     if(area==="forest"){
         background(0, 196, 255);
         fill(0, 255, 68);
@@ -288,18 +269,244 @@ void draw() {
         }
     }
     pressed=false;
+   
 };
 
 
-/////////////////////////////////////////////////////// End void draw ////////////////////////////////
 
 
 
+
+void drawButton (button_text, x, y, length) {
+    textFont(myfont,17);
+    over_button = false;
+    var outline = color;
+    var r = 232;
+    var g=193;
+    var b=102;
+    var greyVB = 220;
+    noStroke();
+    if (mouseX >= x && mouseX <= x + length && mouseY >= y && mouseY <= y + button_height) {
+        over_button = true;
+        if (mousePressed) {
+                x -=2;
+                y += 2;
+        }
+    }
+    fill(r, g, b);
+    rect(x, y, length, button_height, 2);
+    textAlign(CENTER,CENTER);
+    fill (0, 0, 0);
+    textSize(17);
+    text (button_text, x + length/2, y + button_height/2.2);
+    textAlign(LEFT, 0);
+};
+
+
+
+void mouseReleased(){
+    pressed=true;
+};
 
 
 void drawBattle() {
     background(0, 196, 255);
-    noStroke();
+    noStroke(); noStroke();
+    textFont(myfont,17);
+   
+/////////////////////////////////////////////////////////////////////////////////
+ if(area==="town"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        fill(97, 66, 66);
+        rect(45,200,20,100);
+        fill(43, 179, 22);
+        ellipse(55,200,70,70);
+        fill(173, 173, 173);
+        rect(120,230,80,50);
+        rect(110,250,100,50);
+        fill(89, 68, 68);
+        arc(160,300,40,70,-179,0);
+        fill(10, 10, 10);
+        text("Bakery",135,250);
+        drawButton("Bakery",107,311,100);
+        if(over_button&&pressed){
+            area="bakery";
+        }
+        drawButton("Forest",4,311,100);
+        if(over_button&&pressed){
+            area="forest";
+        }
+        textFont(myfont,12);
+        fill(102, 74, 74);
+        rect(230,250,60,50,10);
+        rect(230,260,60,40);
+        fill(145, 145, 145);
+        text("Market",240,260);
+        textFont(myfont,17);
+        rect(245,270,30,30);
+        drawButton("Market",210,311,100);
+        if(over_button&&pressed){
+            area="market";
+        }
+        drawButton("Credits",107,344,100);
+        if(over_button&&pressed){
+            area="credits";
+        }
+        drawButton("Inventory",4,344,100);
+        if(over_button&&pressed){
+            area="inventory";
+        }
+        drawButton("Battle",313,311,84);
+        if(over_button&&pressed){
+            area="battle";
+            for(var i=0;i<5;i++){
+                enhp[i]=100;
+                enX[i]=-50*i;
+            }
+        }
+        drawButton("More Towns",210,344,100);
+        if(over_button&&pressed){
+            area="towns";
+        }
+    }
+//}
+////////////////////////////////////////////////////////////////////////////////
+    if(area==="battle"){
+        stroke(0, 0, 0);
+       //drawBattle();
+        if(enhp[4]<10){
+            drawButton("Back",150,50,100);
+            if(over_button&&pressed){
+                area="town";townsa="Ne"+"w Town";
+            }
+        }
+    }
+
+////////////////////////////////////////////////////////////////
+
+
+    if(area==="forest"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,400);
+        fill(97, 66, 66);
+        if(wood===false){
+            rect(120,200,20,100);
+            rect(300,200,20,100);
+            fill(43, 179, 22);
+            ellipse(310,200,75,75);
+            ellipse(130,200,75,75);
+        }
+        else{
+            rect(120,280,20,20);
+            rect(300,280,20,20);
+        }
+        if(mousePressed&&mouseY>180){
+            wood=true;
+        }
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+    }
+    if(area==="market"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        fill(0);
+        text("Gold: "+gold,122,72);
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+        drawButton("Sell wood",10,50,100);
+        if(over_button&&pressed&&wood){
+            gold+=10;
+            wood=false;
+        }
+        if(sword===false){
+            drawButton("Buy a better sword for 100 gold",10,90,259);
+            if(over_button&&pressed&&gold>99){
+                gold-=100;
+                sword=true;
+            }
+        }
+    }
+    if(area==="bakery"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+        drawButton("Buy Bread for 5 gold",100,200,200);
+        text("Current amount of bread: "+bread,100,251);
+        if(over_button&&pressed&&gold>4){
+            bread++;
+            gold-=5;
+        }
+    }
+    if(area==="credits"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+        text("Ari(Aragorn),\ntimothy.smith\nThis game is dedicated to my friends\nHarrison and MilkyWay.",50,200);
+    }
+    if(area==="towns"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+        drawButton("Visit the forest of Carn",10,45,189);
+        if(over_button&&pressed){
+            area="carn";
+        }
+    }
+    if(area==="inventory"){
+        background(102, 74, 74);
+        drawButton("Back",10,10,75);
+        if(over_button&&pressed){
+            area="town";
+        }
+        text("Supplies:\n"+gold+" gold\n"+bread+" bread\nHP: "+hp+"%",200,200);
+        drawButton("Eat Bread",200,285,85);
+        if(over_button&&pressed&&bread>0){
+            hp+=5;
+            bread--;
+        }
+        translate(0,20);
+    fill(255, 173, 51);
+    rect(167,206,31,17,5);
+    fill(219, 144, 59);
+    arc(182,206,25,7,6,176);
+    fill(150);
+    ellipse(189,195,15,15);
+    resetMatrix();
+    if(sword===true){
+        fill(0);
+        text("\n\n\n\nSword",200,200);
+    }
+    }
+    if(area==="carn"){
+        background(0, 196, 255);
+        fill(0, 255, 68);
+        rect(0,300,400,150);
+        drawButton("Back",5,5,59,100);
+        if(over_button&&pressed){
+            area="town";
+        }
+    }
+    pressed=false;
     fill(125, 82, 82);
     ellipse(200,370,250,150);
     fill(97, 72, 72);
@@ -366,7 +573,7 @@ void drawBattle() {
         rect(-29,7,33,5,2);
     }
     resetMatrix();
-    if(keyPressed&&keyCode===DOWN&&pswordRotate===20){
+    if(keyIsPressed&&keyCode===DOWN&&pswordRotate===20){
         protateSpeed=10;
     }
     pswordRotate+=protateSpeed;
@@ -377,12 +584,12 @@ void drawBattle() {
         pswordRotate=20;
         protateSpeed=0;
     }
-    if(keyPressed&&keyCode===RIGHT){
+    if(keyIsPressed&&keyCode===RIGHT){
         playerX+=5;
         pfacingLeft=false;
         plegsmoving=true;
     }
-    if(keyPressed&&keyCode===LEFT){
+    if(keyIsPressed&&keyCode===LEFT){
         playerX-=5;
         pfacingLeft=true;
         plegsmoving=true;
@@ -513,4 +720,6 @@ void drawBattle() {
     }
 };
 
-////////////////////////////////////////////////////////////////
+
+
+

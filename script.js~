@@ -366,7 +366,7 @@ void drawBattle() {
         rect(-29,7,33,5,2);
     }
     resetMatrix();
-    if(keyPressed&&keyCode===DOWN&&pswordRotate===20){
+    if(keyIsPressed&&keyCode===DOWN&&pswordRotate===20){
         protateSpeed=10;
     }
     pswordRotate+=protateSpeed;
@@ -377,12 +377,12 @@ void drawBattle() {
         pswordRotate=20;
         protateSpeed=0;
     }
-    if(keyPressed&&keyCode===RIGHT){
+    if(keyIsPressed&&keyCode===RIGHT){
         playerX+=5;
         pfacingLeft=false;
         plegsmoving=true;
     }
-    if(keyPressed&&keyCode===LEFT){
+    if(keyIsPressed&&keyCode===LEFT){
         playerX-=5;
         pfacingLeft=true;
         plegsmoving=true;
